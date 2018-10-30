@@ -1,4 +1,4 @@
-antlr4 = java -jar /usr/local/lib/antlr-4.7-complete.jar
+antlr4 = java -jar /javalib/antlr-4.7.1-complete.jar
 SRCFILES = main.java AST.java
 GENERATED = cocoListener.java cocoBaseListener.java cocoParser.java cocoBaseVisitor.java cocoVisitor.java cocoLexer.java
 

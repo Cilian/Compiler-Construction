@@ -11,7 +11,9 @@ class faux{ // collection of non-OO auxiliary functions (currently just error)
 }
 
 abstract class AST{
+    String compile(){return "";}
 }
+
 
 class Start extends AST{
     public List<TokenDef> tokendefs;
@@ -19,6 +21,13 @@ class Start extends AST{
     Start(List<TokenDef> tokendefs, List<DataTypeDef> datatypedefs){
 	this.tokendefs=tokendefs;
 	this.datatypedefs=datatypedefs;
+    }
+    @Override String compile(){
+        String result = "";
+        for(DataTypeDef data : datatypedefs){
+           result = result + "abstract class " + data.dataTypeName + "{};" + "\n";
+        }
+        return result;
     }
 }
 
@@ -29,6 +38,7 @@ class TokenDef extends AST{
 	this.tokenname=tokenname;
 	this.ANTLRCODE=ANTLRCODE;
     }
+
 }
 
 class DataTypeDef extends AST{

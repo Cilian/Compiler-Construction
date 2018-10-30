@@ -40,7 +40,7 @@ public class main {
 	ASTMaker astmaker = new ASTMaker();
 	AST ast=astmaker.visit(parseTree);
 
-	System.out.println("This is where the output is supposed to be\n");
+	System.out.println(ast.compile());
     }
 }
 
