@@ -11,7 +11,9 @@ class faux{ // collection of non-OO auxiliary functions (currently just error)
 }
 
 abstract class AST{
-    String compile(){return "";}
+    String compile(){
+        return "";
+    }
 }
 
 
@@ -22,12 +24,13 @@ class Start extends AST{
 	this.tokendefs=tokendefs;
 	this.datatypedefs=datatypedefs;
     }
-    @Override String compile(){
+    @Override 
+    String compile(){
         String result = "";
         for(DataTypeDef data : datatypedefs){
-           result = result + "abstract class " + data.dataTypeName + "{};" + "\n";
+           result += "abstract class " + data.dataTypeName + "{};" + "\n";
         }
-        return result;
+    return result;
     }
 }
 
@@ -38,7 +41,11 @@ class TokenDef extends AST{
 	this.tokenname=tokenname;
 	this.ANTLRCODE=ANTLRCODE;
     }
-
+    @Override 
+    String compile(){
+        String result = "Tester";
+        return result;
+    }
 }
 
 class DataTypeDef extends AST{
@@ -46,7 +53,15 @@ class DataTypeDef extends AST{
     public List<Alternative> alternatives;
     DataTypeDef(String dataTypeName, List<Alternative> alternatives){
 	this.dataTypeName=dataTypeName;
-	this.alternatives=alternatives;
+    this.alternatives=alternatives;
+    }
+    @Override 
+    String compile(){
+        String result ="";
+        for(Alternative alt : alternatives){
+            result = "class";
+        }
+        return result;
     }
 }
 
@@ -59,12 +74,25 @@ class Alternative extends AST{
 	this.arguments=arguments;
 	this.tokens=tokens;
     }
+    @Override
+    String compile() {
+        String result = "";
+        for(Argument arg : arguments){
+            result = "class " +  arg.name + " extends" + "\n"; 
+         }
+        return result;
+    }
 }
 
 class Argument extends AST{
     public String type;
     public String name;
     Argument(String type, String name){this.type=type; this.name=name;}
+    @Override 
+    String compile(){
+        String result = "Tester";
+        return result;
+    }
 }
 
 abstract class Token extends AST{}
