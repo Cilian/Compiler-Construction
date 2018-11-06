@@ -28,8 +28,11 @@ class Start extends AST{
     String compile(){
         String result = "";
         for(DataTypeDef data : datatypedefs){
-           result += "abstract class " + data.dataTypeName + "{};" + "\n";
+          result +=  data.compile();
         }
+        for(TokenDef toke : datatypedefs){
+            result += toke.compile();
+         }
     return result;
     }
 }
@@ -43,7 +46,7 @@ class TokenDef extends AST{
     }
     @Override 
     String compile(){
-        String result = "Tester";
+        String result = "Token\n";
         return result;
     }
 }
@@ -57,10 +60,8 @@ class DataTypeDef extends AST{
     }
     @Override 
     String compile(){
-        String result ="";
-        for(Alternative alt : alternatives){
-            result = "class";
-        }
+        String result ="Data\n";
+      
         return result;
     }
 }
@@ -76,10 +77,10 @@ class Alternative extends AST{
     }
     @Override
     String compile() {
-        String result = "";
-        for(Argument arg : arguments){
-            result = "class " +  arg.name + " extends" + "\n"; 
-         }
+        String result = "Alternative\n";
+       // for(Argument arg : arguments){
+         //   result = "class " +  arg.name + " extends" + "\n"; 
+         // }
         return result;
     }
 }
@@ -90,7 +91,7 @@ class Argument extends AST{
     Argument(String type, String name){this.type=type; this.name=name;}
     @Override 
     String compile(){
-        String result = "Tester";
+        String result = "";
         return result;
     }
 }
