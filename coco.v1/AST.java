@@ -66,14 +66,7 @@ class DataTypeDef extends AST{
             result += "class " + alt.constructor + " extends " + dataTypeName + "{\n";
 
             result +=  alt.compile();
-
-            result += alt.constructor + "(" ;
-
            }
-
-         
-          
-
         return result;
     }
 }
@@ -94,8 +87,26 @@ class Alternative extends AST{
         for(Argument arg : arguments){
             result += "public " + arg.compile() + ";\n";
          }
-         
 
+         result += constructor + "(";
+
+ 
+            if(arguments.size() > 1){
+                for(int i = 0; i < arguments.size() - 1; i++){
+                    result += arguments.get(i).compile() + ", ";
+                }
+            } 
+
+            result += arguments.get(arguments.size()-1).compile();
+            result += "){\n";
+
+            for(Argument arg : arguments){
+                result += "  this." + arg.name + "=" + arg.name + ";\n";
+             }
+             result += "  }\n";
+             result += "}\n";
+
+         //   result +=  arg.compile() + ", ";
         return result;
     }
 }
@@ -112,7 +123,7 @@ class Argument extends AST{
         }   else actType = "expr";
         
         String result = "";
-        result += actType + " " + name; 
+        result += actType + " " + name ; 
         return result;
     }
 }
