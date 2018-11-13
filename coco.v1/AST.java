@@ -113,8 +113,8 @@ class Alternative extends AST{
              for(int i = 0; i <= arguments.size()-1; i++){
 
                 if(i == 0 && arguments.get(i).type.equals("expr")){
-                    result += "+ " + "\"(\"";
-                    result += arguments.get(i).name + op + " +";
+                    result += "+ " + "\"(\"+";
+                    result += arguments.get(i).name + "+" + op + " +";
                 }   else if(arguments.get(i).type.equals("expr")){
 
                         result += arguments.get(i).name + "+\")\";";
@@ -126,28 +126,10 @@ class Alternative extends AST{
                     result += arguments.get(i).name + ";";
 
                 }
-                
-
-
-
              }
-            // for(Argument arg : arguments){
-    
-            // if(!arg.type.equals("expr")){
-            //     result += " + \"\"" + " + ";
-            //     result += arg.name;
-            // }
-            // if(arg.type.equals("expr")){
-            //     result += "+ \"(\" + " + arg.name;
-            // }
-                
-            // }
-                
-
-
+             result += "\n    }";
              result += "\n}\n";
 
-         //   result +=  arg.compile() + ", ";
         return result;
     }
 }
