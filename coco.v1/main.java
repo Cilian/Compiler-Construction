@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class main {
     public static void main(String[] args) throws IOException{
-
+		
 	// we expect exactly one argument: the name of the input file
 	if (args.length!=1) {
 	    System.err.println("\n");
@@ -38,8 +38,9 @@ public class main {
 	// Instead of the interpreter, we have now a maker for an
 	// Abstract Syntax Tree (AST) that we define right after this class.
 	ASTMaker astmaker = new ASTMaker();
-	AST ast=astmaker.visit(parseTree);
+	AST ast = astmaker.visit(parseTree);
 
+	ast.check();
 	System.out.println(ast.compile());
     }
 }

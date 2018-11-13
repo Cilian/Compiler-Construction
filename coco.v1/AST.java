@@ -14,6 +14,8 @@ abstract class AST{
     String compile(){
         return "";
     }
+    void check(){
+    }
 }
 
 
@@ -24,6 +26,14 @@ class Start extends AST{
 	this.tokendefs=tokendefs;
 	this.datatypedefs=datatypedefs;
     }
+
+    @Override
+    void check() {
+        for(DataTypeDef data : datatypedefs){
+            data.check();
+          }
+    }
+
     @Override 
     String compile(){
         String result = "";
@@ -58,6 +68,15 @@ class DataTypeDef extends AST{
 	this.dataTypeName=dataTypeName;
     this.alternatives=alternatives;
     }
+
+    @Override
+    void check() {      
+        
+        for(Alternative alt : alternatives){
+            alt.check();
+        }
+    }
+
     @Override 
     String compile(){
         String result = "";
@@ -80,6 +99,30 @@ class Alternative extends AST{
 	this.arguments=arguments;
 	this.tokens=tokens;
     }
+    @Override
+    void check() {
+        for(Argument arg : arguments){
+            // System.out.println(arg.name);
+            // System.out.println(arg.type);
+            for(Token tok : tokens){
+                System.out.println(tok.toString());
+            }
+
+            if(arg.name.equals(arg.type)){
+                faux.error("Can't use type as name. " + "type: " +  arg.type + " name: " +  arg.name);
+            } 
+        }
+        for (int i = 0; i < arguments.size()-1; i++) {
+            String name = arguments.get(i).name;
+            for (int j = i+1; i < arguments.size()-1; i++) {
+                if (arguments.get(j).name.equals(name)){
+                    faux.error("Duplicate variable name: " + name);
+                }
+            }
+        }
+    }
+
+
     @Override
     String compile() {
         String result = "";
@@ -149,6 +192,7 @@ class Argument extends AST{
         result += actType + " " + name ; 
         return result;
     }
+
 }
 
 abstract class Token extends AST{}
@@ -156,10 +200,17 @@ abstract class Token extends AST{}
 class Nonterminal extends Token{
     public String name;
     Nonterminal(String name){this.name=name;}
+    public String toString(){
+        return "" + name;
+    }
+
 }
 
 class Terminal extends Token{
     public String token;
     Terminal(String token){this.token=token;}
+    public String toString(){
+        return "" + token;
+    }
 }
 
