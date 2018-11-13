@@ -83,13 +83,11 @@ class Alternative extends AST{
     @Override
     String compile() {
         String result = "";
-
         for(Argument arg : arguments){
-            result += "public " + arg.compile() + ";\n";
+            result += "    public " + arg.compile() + ";\n";
          }
 
-         result += constructor + "(";
-
+         result += "    "+constructor + "(";
  
             if(arguments.size() > 1){
                 for(int i = 0; i < arguments.size() - 1; i++){
@@ -101,9 +99,9 @@ class Alternative extends AST{
             result += "){\n";
 
             for(Argument arg : arguments){
-                result += "  this." + arg.name + "=" + arg.name + ";\n";
+                result += "        this." + arg.name + "=" + arg.name + ";\n";
              }
-             result += "  }\n";
+             result += "    }\n";
              result += "}\n";
 
          //   result +=  arg.compile() + ", ";
