@@ -103,14 +103,29 @@ class Alternative extends AST{
              }
              result += "    }\n    ";
              result += "public String toString(){\n    ";
-             result += "return \"\" ";
+             result += "    return \"\" ";
 
+             String op = "";
+             if(constructor.equals("Mult")){
+                 op = "\"*\"";
+             }  else op =  "\"+\"";
 
              for(int i = 0; i <= arguments.size()-1; i++){
+
                 if(i == 0 && arguments.get(i).type.equals("expr")){
                     result += "+ " + "\"(\"";
-                    result += arguments.get(i).name + "\"*\" +";
-                }   else result += arguments.get(i).name + "+ \")\";";
+                    result += arguments.get(i).name + op + " +";
+                }   else if(arguments.get(i).type.equals("expr")){
+
+                        result += arguments.get(i).name + "+\")\";";
+
+                } 
+                else {
+
+                    result += " + \"\"" + " + ";
+                    result += arguments.get(i).name + ";";
+
+                }
                 
 
 
