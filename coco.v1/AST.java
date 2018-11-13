@@ -101,8 +101,36 @@ class Alternative extends AST{
             for(Argument arg : arguments){
                 result += "        this." + arg.name + "=" + arg.name + ";\n";
              }
-             result += "    }\n";
-             result += "}\n";
+             result += "    }\n    ";
+             result += "public String toString(){\n    ";
+             result += "return \"\" ";
+
+
+             for(int i = 0; i <= arguments.size()-1; i++){
+                if(i == 0 && arguments.get(i).type.equals("expr")){
+                    result += "+ " + "\"(\"";
+                    result += arguments.get(i).name + "\"*\" +";
+                }   else result += arguments.get(i).name + "+ \")\";";
+                
+
+
+
+             }
+            // for(Argument arg : arguments){
+    
+            // if(!arg.type.equals("expr")){
+            //     result += " + \"\"" + " + ";
+            //     result += arg.name;
+            // }
+            // if(arg.type.equals("expr")){
+            //     result += "+ \"(\" + " + arg.name;
+            // }
+                
+            // }
+                
+
+
+             result += "\n}\n";
 
          //   result +=  arg.compile() + ", ";
         return result;
