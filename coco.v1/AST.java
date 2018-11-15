@@ -40,9 +40,9 @@ class Start extends AST{
         for(DataTypeDef data : datatypedefs){
           result +=  data.compile();
         }
-       // for(TokenDef toke : tokendefs){
-         //   result += toke.compile();
-        // }
+        for(TokenDef toke : tokendefs){
+            result += toke.compile();
+         }
     return result;
     }
 }
@@ -101,13 +101,34 @@ class Alternative extends AST{
     }
     @Override
     void check() {
+        String str = "";
+        String str2 = "";
+        char[] excluder = {'(', ')', '?', '!', '.',',', '*', '+', '/', '-', '\'', ' '};
         for(Argument arg : arguments){
             // System.out.println(arg.name);
             // System.out.println(arg.type);
             for(Token tok : tokens){
-                System.out.println(tok.toString());
-            }
+                str = tok.toString();
 
+                String filteredToken = str.replace("(", "").replace(")", "").replace("*", "").replace("+", "").replace("-", "").replace("/", "").replace("'", "").trim();
+                str2 += filteredToken;
+                System.out.println("filt: " + filteredToken);
+                System.out.println("arg: " + arg.name);
+              //  System.out.println("Str2: " +str2);
+               
+                if (filteredToken.equals("")){
+                    
+
+
+                } else if(!filteredToken.equals(arg.name)){
+                    System.out.println("Du døde");
+                    
+                    //faux.error("Død");
+
+            }
+        }
+            
+        
             if(arg.name.equals(arg.type)){
                 faux.error("Can't use type as name. " + "type: " +  arg.type + " name: " +  arg.name);
             } 
