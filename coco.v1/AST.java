@@ -103,13 +103,11 @@ class Alternative extends AST{
     void check() {
         String str = "";
         String str2 = "";
-        char[] excluder = {'(', ')', '?', '!', '.',',', '*', '+', '/', '-', '\'', ' '};
         for(Argument arg : arguments){
             // System.out.println(arg.name);
             // System.out.println(arg.type);
             for(Token tok : tokens){
                 str = tok.toString();
-
                 String filteredToken = str.replace("(", "").replace(")", "").replace("*", "").replace("+", "").replace("-", "").replace("/", "").replace("'", "").trim();
                 str2 += filteredToken;
                 System.out.println("filt: " + filteredToken);
@@ -117,10 +115,13 @@ class Alternative extends AST{
               //  System.out.println("Str2: " +str2);
                
                 if (filteredToken.equals("")){
-                    
 
-
-                } else if(!filteredToken.equals(arg.name)){
+                } else if (filteredToken.equals(arg.name)){
+                    System.out.println("Det matcher");
+                    break;
+                }
+                
+                else if(!filteredToken.equals(arg.name)){
                     System.out.println("Du døde");
                     
                     //faux.error("Død");
