@@ -102,6 +102,9 @@ class Alternative extends AST{
     @Override
     void check() {
         for(Argument arg : arguments){
+            if(arg.name.equals(arg.type)){
+                faux.error("Can't use type as name. " + "type: " +  arg.type + " name: " +  arg.name);
+            } 
             boolean checker = false;
             for(Token tok : tokens){
                 String str = tok.toString();
@@ -118,9 +121,7 @@ class Alternative extends AST{
         }
             
         
-            if(arg.name.equals(arg.type)){
-                faux.error("Can't use type as name. " + "type: " +  arg.type + " name: " +  arg.name);
-            } 
+
         }
         for (int i = 0; i < arguments.size()-1; i++) {
             String name = arguments.get(i).name;
