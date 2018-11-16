@@ -101,32 +101,20 @@ class Alternative extends AST{
     }
     @Override
     void check() {
-        String str = "";
-        String str2 = "";
         for(Argument arg : arguments){
-            // System.out.println(arg.name);
-            // System.out.println(arg.type);
+            boolean checker = false;
             for(Token tok : tokens){
-                str = tok.toString();
+                String str = tok.toString();
                 String filteredToken = str.replace("(", "").replace(")", "").replace("*", "").replace("+", "").replace("-", "").replace("/", "").replace("'", "").trim();
-                str2 += filteredToken;
-                System.out.println("filt: " + filteredToken);
-                System.out.println("arg: " + arg.name);
-              //  System.out.println("Str2: " +str2);
-               
-                if (filteredToken.equals("")){
-
-                } else if (filteredToken.equals(arg.name)){
-                    System.out.println("Det matcher");
+               // System.out.println("filt: " + filteredToken);
+               // System.out.println("arg: " + arg.name);
+                if (filteredToken.contains(arg.name)){
+                    checker = true;
                     break;
                 }
-                
-                else if(!filteredToken.equals(arg.name)){
-                    System.out.println("Du døde");
-                    
-                    //faux.error("Død");
-
             }
+            if(checker == false){                
+                faux.error("Token doesn't match with argument: " + arg.name + " in expression: " +  constructor);
         }
             
         
