@@ -18,7 +18,6 @@ abstract class AST{
     }
 }
 
-
 class Start extends AST{
     public List<TokenDef> tokendefs;
     public List<DataTypeDef> datatypedefs;
@@ -40,9 +39,6 @@ class Start extends AST{
         for(DataTypeDef data : datatypedefs){
           result +=  data.compile();
         }
-        for(TokenDef toke : tokendefs){
-            result += toke.compile();
-         }
     return result;
     }
 }
@@ -53,11 +49,6 @@ class TokenDef extends AST{
     TokenDef(String tokenname, String ANTLRCODE){
 	this.tokenname=tokenname;
 	this.ANTLRCODE=ANTLRCODE;
-    }
-    @Override 
-    String compile(){
-        String result = "Token\n";
-        return result;
     }
 }
 
@@ -71,8 +62,7 @@ class DataTypeDef extends AST{
 
     @Override
     void check() {      
-        
-        for(Alternative alt : alternatives){
+        for(Alternative alt : alternatives){    
             alt.check();
         }
     }
@@ -101,6 +91,19 @@ class Alternative extends AST{
     }
     @Override
     void check() {
+
+        for(int i = 0; i < tokens.size()-1; i++){
+            for(int j = i+1; j < tokens.size()-1; j++){
+                if(tokens.get(i).toString().equals(tokens.get(j).toString())){
+                    faux.error("Duplicate token in " + constructor + ": " + tokens.toString());
+                    
+                }
+
+                
+            }
+
+
+        }
         for(Argument arg : arguments){
             if(arg.name.equals(arg.type)){
                 faux.error("Can't use type as name. " + "type: " +  arg.type + " name: " +  arg.name);
@@ -119,8 +122,6 @@ class Alternative extends AST{
             if(checker == false){                
                 faux.error("Token doesn't match with argument: " + arg.name + " in expression: " +  constructor);
         }
-            
-        
 
         }
         for (int i = 0; i < arguments.size()-1; i++) {
