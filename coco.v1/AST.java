@@ -98,10 +98,7 @@ class Alternative extends AST{
                     faux.error("Duplicate token in " + constructor + ": " + tokens.toString());
                     
                 }
-
-                
             }
-
 
         }
         for(Argument arg : arguments){
@@ -225,4 +222,3 @@ class Terminal extends Token{
         return "" + token;
     }
 }
-
