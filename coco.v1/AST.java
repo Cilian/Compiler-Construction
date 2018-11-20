@@ -96,10 +96,8 @@ class Alternative extends AST{
             for(int j = i+1; j < tokens.size()-1; j++){
                 if(tokens.get(i).toString().equals(tokens.get(j).toString())){
                     faux.error("Duplicate token in " + constructor + ": " + tokens.toString());
-                    
                 }
             }
-
         }
         for(Argument arg : arguments){
             if(arg.name.equals(arg.type)){
@@ -119,6 +117,7 @@ class Alternative extends AST{
         }
 
         }
+        // check if the arguments are in there exactly once
         for (int i = 0; i < arguments.size()-1; i++) {
             String name = arguments.get(i).name;
             for (int j = i+1; i < arguments.size()-1; i++) {
@@ -129,25 +128,14 @@ class Alternative extends AST{
         }
     }
 
-
     @Override
     String compile() {
         String result = "";
         for(Argument arg : arguments){
             result += "    public " + arg.compile() + ";\n";
          }
-
          result += "    "+constructor + "(";
  
-        // for(Token tok: tokens){
-        //     String str = "" + tok.getClass().getName();
-        //     if(str.equals("Terminal")){
-        //         System.out.println(tok.toString());
-        //     }
-
-        // }
-
-
         if(arguments.size() > 1){
             for(int i = 0; i < arguments.size() - 1; i++){
                 result += arguments.get(i).compile() + ", ";
@@ -160,6 +148,7 @@ class Alternative extends AST{
             for(Argument arg : arguments){
                 result += "        this." + arg.name + "=" + arg.name + ";\n";
              }
+             
              result += "    }\n    ";
              result += "public String toString(){\n    ";
              result += "    return \"\" ";
@@ -168,29 +157,8 @@ class Alternative extends AST{
                 result += tok.toString();
             }
             result += ";";
-            //  String op = "";
-            //  if(constructor.equals("Mult")){
-            //      op = "\"*\"";
-            //  }  else op =  "\"+\"";
-
-            //  for(int i = 0; i <= arguments.size()-1; i++){
-
-            //     if(i == 0 && arguments.get(i).type.equals("expr")){
-            //         result += "+ " + "\"(\"+";
-            //         result += arguments.get(i).name + "+" + op + " +";
-            //     }   else if(arguments.get(i).type.equals("expr")){
-
-            //             result += arguments.get(i).name + "+\")\";";
-
-            //     } 
-            //     else {
-            //         result += " + \"\"" + " + ";
-            //         result += arguments.get(i).name + ";";
-
-            //     }
-            //  }
-             result += "\n    }";
-             result += "\n}\n";
+            result += "\n    }";
+            result += "\n}\n";
 
         return result;
     }
@@ -211,7 +179,6 @@ class Argument extends AST{
         result += actType + " " + name ; 
         return result;
     }
-
 }
 
 abstract class Token extends AST{}
@@ -222,7 +189,6 @@ class Nonterminal extends Token{
     public String toString(){
         return "" + name;
     }
-
 }
 
 class Terminal extends Token{
