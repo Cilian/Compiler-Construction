@@ -107,13 +107,11 @@ class Alternative extends AST{
             } 
             boolean checker = false;
             for(Token tok : tokens){
-                String str = tok.toString();
-                String filteredToken = str.replace("(", "").replace(")", "").replace("*", "").replace("+", "").replace("-", "").replace("/", "").replace("'", "").trim();
-               // System.out.println("filt: " + filteredToken);
-               // System.out.println("arg: " + arg.name);
-                if (filteredToken.contains(arg.name)){
-                    checker = true;
-                    break;
+                if (tok.getClass().getName().equals("Nonterminal")){
+                    if(tok.toString().equals(arg.name)){
+                        checker = true;
+                        break;
+                    }
                 }
             }
             if(checker == false){                
@@ -141,9 +139,18 @@ class Alternative extends AST{
 
          result += "    "+constructor + "(";
  
-            if(arguments.size() > 1){
-                for(int i = 0; i < arguments.size() - 1; i++){
-                    result += arguments.get(i).compile() + ", ";
+        // for(Token tok: tokens){
+        //     String str = "" + tok.getClass().getName();
+        //     if(str.equals("Terminal")){
+        //         System.out.println(tok.toString());
+        //     }
+
+        // }
+
+
+        if(arguments.size() > 1){
+            for(int i = 0; i < arguments.size() - 1; i++){
+                result += arguments.get(i).compile() + ", ";
                 }
             } 
 
@@ -156,7 +163,10 @@ class Alternative extends AST{
              result += "    }\n    ";
              result += "public String toString(){\n    ";
              result += "    return \"\" ";
+             for(Token tok : tokens){
+               
 
+            }
              String op = "";
              if(constructor.equals("Mult")){
                  op = "\"*\"";
@@ -173,7 +183,6 @@ class Alternative extends AST{
 
                 } 
                 else {
-
                     result += " + \"\"" + " + ";
                     result += arguments.get(i).name + ";";
 

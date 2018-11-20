@@ -1,0 +1,31 @@
+// Tokens for the lexer:
+
+NUM #: ('0'..'9')+ ('.'('0'..'9')+)? ;#
+ID  #: ('A'..'Z'|'a'..'z'|'_')+ ;     #
+BOOL #: ('true'|'false') #
+
+// We could summarize all unary and binary operators also in tokens like
+// BINOP #: ('+','*','/','^','&&','<') #
+// but we make an alternative for each of them.
+
+// Example: Expressions
+
+data expr = Constant(NUM v)        : v
+          | Bool(BOOL b)           : b
+          | Variable(ID name)      : name
+	  | Pop(expr e)            : e 'pop'
+	  | Minus(expr e)          : e '-'
+	  | Not(expr e)            : e '!'
+	  | Abs(expr e)            : e 'abs'
+	  | Add(expr e1, expr e2)  : e1 e2 '+'
+	  | Mult(expr e1, expr e2) : e1 e2 '*'
+	  | Div(expr e1, expr e2)  : e1 e2 '/'
+	  | Pow(expr e1, expr e2)  : e1 e2 '^'
+	  | And(expr e1, expr e2)  : e1 e2 '&&'
+	  | Or(expr e1, expr e2)   : e1 e2 '||'
+	  | Cond(expr e1, expr e2, expr e3): e1 e2 e3 '?'
+          ;
+
+data command = Expr(expr e)  : e 'enter'
+             | Store(expr e, ID name) : e 'enter' name 'store'
+             ;
