@@ -164,30 +164,31 @@ class Alternative extends AST{
              result += "public String toString(){\n    ";
              result += "    return \"\" ";
              for(Token tok : tokens){
-               
-
+                result += "+";
+                result += tok.toString();
             }
-             String op = "";
-             if(constructor.equals("Mult")){
-                 op = "\"*\"";
-             }  else op =  "\"+\"";
+            result += ";";
+            //  String op = "";
+            //  if(constructor.equals("Mult")){
+            //      op = "\"*\"";
+            //  }  else op =  "\"+\"";
 
-             for(int i = 0; i <= arguments.size()-1; i++){
+            //  for(int i = 0; i <= arguments.size()-1; i++){
 
-                if(i == 0 && arguments.get(i).type.equals("expr")){
-                    result += "+ " + "\"(\"+";
-                    result += arguments.get(i).name + "+" + op + " +";
-                }   else if(arguments.get(i).type.equals("expr")){
+            //     if(i == 0 && arguments.get(i).type.equals("expr")){
+            //         result += "+ " + "\"(\"+";
+            //         result += arguments.get(i).name + "+" + op + " +";
+            //     }   else if(arguments.get(i).type.equals("expr")){
 
-                        result += arguments.get(i).name + "+\")\";";
+            //             result += arguments.get(i).name + "+\")\";";
 
-                } 
-                else {
-                    result += " + \"\"" + " + ";
-                    result += arguments.get(i).name + ";";
+            //     } 
+            //     else {
+            //         result += " + \"\"" + " + ";
+            //         result += arguments.get(i).name + ";";
 
-                }
-             }
+            //     }
+            //  }
              result += "\n    }";
              result += "\n}\n";
 
@@ -228,6 +229,7 @@ class Terminal extends Token{
     public String token;
     Terminal(String token){this.token=token;}
     public String toString(){
+        token = token.replace("\'", "\"");
         return "" + token;
     }
 }
