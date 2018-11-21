@@ -151,9 +151,9 @@ class Alternative extends AST{
              
              result += "    }\n    ";
              result += "public String toString(){\n    ";
-             result += "    return \"\" ";
+             result += "    return \"\"";
              for(Token tok : tokens){
-                result += "+";
+                result += " + ";
                 result += tok.toString();
             }
             result += ";";
