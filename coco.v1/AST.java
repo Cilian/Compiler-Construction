@@ -181,7 +181,11 @@ class Argument extends AST{
     }
 }
 
-abstract class Token extends AST{}
+abstract class Token extends AST{
+    public String toString(){
+        return "";
+    }
+}
 
 class Nonterminal extends Token{
     public String name;
